@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
 public abstract class AbstractThrowableAction implements ThrowableActionImpl {
-    private final @Getter GunshellThrowable throwable;
+    private final @Getter
+    GunshellThrowable throwable;
 
     public AbstractThrowableAction(GunshellThrowable throwable) {
         this.throwable = throwable;

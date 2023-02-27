@@ -1,17 +1,17 @@
 package com.jazzkuh.gunshell.common.listeners;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.events.MeleeDamageEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.common.MeleeActionRegistry;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
+import com.jazzkuh.gunshell.utils.ChatUtils;
+import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.common.actions.melee.abstraction.MeleeActionImpl;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
-import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
-import com.jazzkuh.gunshell.utils.ChatUtils;
-import com.jazzkuh.gunshell.utils.PluginUtils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.ArmorStand;
@@ -73,9 +73,9 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (hasCooldown(cooldownKey, melee) || hasGrabCooldown(player.getUniqueId(), melee)) return;
 
-        MeleeDamageEvent meleeDamageEvent = new MeleeDamageEvent(player, entity, melee);
-        Bukkit.getPluginManager().callEvent(meleeDamageEvent);
+        MeleeDamageEvent meleeDamageEvent = new MeleeDamageEvent(player, melee);
         if (meleeDamageEvent.isCancelled()) return;
+        Bukkit.getPluginManager().callEvent(meleeDamageEvent);
 
         GunshellPlugin.getInstance().getMeleeCooldownMap().put(cooldownKey, System.currentTimeMillis());
         PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);

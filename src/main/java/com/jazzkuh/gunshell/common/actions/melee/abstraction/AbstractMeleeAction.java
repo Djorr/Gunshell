@@ -7,7 +7,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public abstract class AbstractMeleeAction implements MeleeActionImpl {
-    private final @Getter GunshellMelee melee;
+    private final @Getter
+    GunshellMelee melee;
 
     public AbstractMeleeAction(GunshellMelee melee) {
         this.melee = melee;

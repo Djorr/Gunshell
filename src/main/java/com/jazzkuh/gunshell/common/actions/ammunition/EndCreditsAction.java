@@ -1,6 +1,5 @@
 package com.jazzkuh.gunshell.common.actions.ammunition;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
@@ -11,6 +10,7 @@ import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.GunshellPlugin;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -42,10 +42,6 @@ public class EndCreditsAction extends AbstractAmmunitionAction {
             Player playerTarget = (Player) livingEntity;
             if (playerTarget.getGameMode() == GameMode.SPECTATOR
                     || playerTarget.getGameMode() == GameMode.CREATIVE) return;
-
-            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
-                compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
-            }
 
             MessagesConfig.BULLET_HIT_BY_PLAYER.get(playerTarget,
                     new PlaceHolder("Name", player.getName()));

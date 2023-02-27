@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jazzkuh</groupId>
-    <artifactId>Gunshell</artifactId>
-    <version>1.3</version>
+    <artifactId>MTWapen</artifactId>
+    <version>3.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Gunshell</name>
+    <name>MTWapen</name>
 
     <properties>
-        <project.codename>Gunshell</project.codename>
+        <project.codename>MTWapen</project.codename>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -20,32 +20,6 @@
     <build>
         <finalName>${project.codename}-v${project.version}</finalName>
         <plugins>
-            <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <version>4.9.10</version>
-                <executions>
-                    <execution>
-                        <id>get-the-git-infos</id>
-                        <goals>
-                            <goal>revision</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-                    <prefix>git</prefix>
-                    <verbose>false</verbose>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-                    <format>json</format>
-                    <gitDescribe>
-                        <skip>false</skip>
-                        <always>false</always>
-                        <dirty>-dirty</dirty>
-                    </gitDescribe>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -147,13 +121,6 @@
             <artifactId>worldguardwrapper</artifactId>
             <version>1.2.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.Byteflux.CombatTagPlus</groupId>
-            <artifactId>CombatTagPlus</artifactId>
-            <version>1.3.1</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/external/CombatTagPlus.jar</systemPath>
-        </dependency>
 
         <!-- NMS -->
         <dependency>
@@ -163,27 +130,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc.</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc...</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.18.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.spigotmc....</groupId>
             <artifactId>spigot</artifactId>
             <version>1.19-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc.....</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.19.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

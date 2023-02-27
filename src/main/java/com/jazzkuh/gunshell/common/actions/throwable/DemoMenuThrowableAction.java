@@ -7,10 +7,7 @@ import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
@@ -47,10 +44,6 @@ public class DemoMenuThrowableAction extends AbstractThrowableAction {
                 Player playerTarget = (Player) livingEntity;
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR
                         || playerTarget.getGameMode() == GameMode.CREATIVE) return;
-
-                if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
-                    compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
-                }
 
                 CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
                 compatibilityLayer.showDemoMenu(playerTarget);

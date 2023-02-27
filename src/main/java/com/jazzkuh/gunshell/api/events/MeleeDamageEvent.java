@@ -2,7 +2,6 @@ package com.jazzkuh.gunshell.api.events;
 
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import lombok.Getter;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -10,15 +9,12 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 public class MeleeDamageEvent extends Event implements Cancellable {
-    private boolean cancelled;
     private final @Getter Player player;
-    private final @Getter LivingEntity livingEntity;
     private final @Getter GunshellMelee melee;
     private static final HandlerList handlers = new HandlerList();
 
-    public MeleeDamageEvent(Player player, LivingEntity livingEntity, @NotNull GunshellMelee melee) {
+    public MeleeDamageEvent(Player player, @NotNull GunshellMelee melee) {
         this.player = player;
-        this.livingEntity = livingEntity;
         this.melee = melee;
     }
 
@@ -33,11 +29,11 @@ public class MeleeDamageEvent extends Event implements Cancellable {
 
     @Override
     public boolean isCancelled() {
-        return cancelled;
+        return false;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setCancelled(boolean b) {
+
     }
 }

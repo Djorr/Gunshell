@@ -1,8 +1,8 @@
 package com.jazzkuh.gunshell.utils.command;
 
+import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
-import com.jazzkuh.gunshell.utils.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;

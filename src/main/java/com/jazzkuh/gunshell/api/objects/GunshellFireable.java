@@ -1,10 +1,10 @@
 package com.jazzkuh.gunshell.api.objects;
 
-import com.jazzkuh.gunshell.api.interfaces.GunshellWeaponImpl;
-import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.api.interfaces.GunshellWeaponImpl;
+import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,8 +40,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private @Getter @Setter String sound;
     private @Getter @Setter String reloadSound;
     private @Getter @Setter String emptySound;
-    private @Getter @Setter int soundRange;
-    private @Getter @Setter int soundVolume;
     private @Getter @Setter double recoilAmount;
     private @Getter @Setter double knockbackAmount;
     private @Getter @Setter double selfKnockbackAmount;
@@ -72,8 +70,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.sound = configuration.getString("sound", "empty");
         this.reloadSound = configuration.getString("reloadSound", "empty");
         this.emptySound = configuration.getString("emptySound", "empty");
-        this.soundRange = configuration.getInt("soundRange", this.range);
-        this.soundVolume = configuration.getInt("soundVolume", 100);
         this.recoilAmount = configuration.getDouble("recoilAmount", 0.0);
         this.knockbackAmount = configuration.getDouble("knockbackAmount", 0.0);
         this.selfKnockbackAmount = configuration.getDouble("selfKnockbackAmount", 0.0);

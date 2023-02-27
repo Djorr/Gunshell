@@ -9,9 +9,9 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 public class FireableToggleScopeEvent extends Event implements Cancellable {
-    private boolean cancelled;
     private final @Getter Player player;
-    private final @Getter GunshellFireable fireable;
+    private final @Getter
+    GunshellFireable fireable;
     private static final HandlerList handlers = new HandlerList();
 
     public FireableToggleScopeEvent(Player player, @NotNull GunshellFireable fireable) {
@@ -30,11 +30,11 @@ public class FireableToggleScopeEvent extends Event implements Cancellable {
 
     @Override
     public boolean isCancelled() {
-        return cancelled;
+        return false;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setCancelled(boolean b) {
+
     }
 }

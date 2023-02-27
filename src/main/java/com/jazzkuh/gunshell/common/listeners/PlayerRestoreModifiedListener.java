@@ -1,8 +1,8 @@
 package com.jazzkuh.gunshell.common.listeners;
 
+import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
-import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.entity.Player;

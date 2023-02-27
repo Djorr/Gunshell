@@ -1,5 +1,9 @@
 package com.jazzkuh.gunshell.common.commands;
 
+import com.jazzkuh.gunshell.utils.ChatUtils;
+import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.utils.command.CommandInvocation;
+import com.jazzkuh.gunshell.utils.command.Subcommand;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
@@ -7,25 +11,19 @@ import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
-import com.jazzkuh.gunshell.utils.ChatUtils;
-import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.command.AbstractCommand;
-import com.jazzkuh.gunshell.utils.command.CommandInvocation;
-import com.jazzkuh.gunshell.utils.command.Subcommand;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class GunshellCMD extends AbstractCommand {
 
     public GunshellCMD() {
-        super("gunshell");
+        super("mtwapen");
     }
 
     @Override
@@ -39,8 +37,7 @@ public class GunshellCMD extends AbstractCommand {
 
     private void sendDefaultMessage(CommandSender sender) {
         ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");
-        ChatUtils.sendMessage(sender, "&8| &aThis server is using Gunshell &2v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&a.");
-        ChatUtils.sendMessage(sender, "&8| &2Description: &a" + GunshellPlugin.getInstance().getDescription().getDescription());
+        ChatUtils.sendMessage(sender, "&8| &aThis server is running MTWapens &23.6&a.");
         ChatUtils.sendMessage(sender, "&8| &2Download: &a" + GunshellPlugin.getInstance().getDescription().getWebsite());
         ChatUtils.sendMessage(sender, "&8| &2Authors: &a" + StringUtils.join(GunshellPlugin.getInstance().getDescription().getAuthors(), ", "));
         ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");

@@ -8,7 +8,6 @@ import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,7 +49,7 @@ public class PlayerSwapHandListener implements Listener {
         List<String> ammunitionKeys = fireable.getAmmunitionKeys();
         if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).isEmpty()) {
             MessagesConfig.ERROR_OUT_OF_AMMO.get(player);
-            player.playSound(player.getLocation(), fireable.getEmptySound(), fireable.getSoundVolume(), 1F);
+            player.playSound(player.getLocation(), fireable.getEmptySound(), 100, 1F);
             return;
         }
 
@@ -60,29 +59,17 @@ public class PlayerSwapHandListener implements Listener {
             GunshellPlugin.getInstance().getReloadingSet().add(player.getUniqueId());
 
             for (Player target : player.getLocation().getWorld().getPlayers()) {
-                if (target.getLocation().distance(player.getLocation()) <= fireable.getSoundRange()) {
-                    target.playSound(player.getLocation(), fireable.getReloadSound(), fireable.getSoundVolume(), 1F);
+                if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
+                    target.playSound(player.getLocation(), fireable.getReloadSound(), 100, 1F);
                 }
             }
 
-            MessagesConfig.RELOADING_START.get(player,
-                    new PlaceHolder("Durability", String.valueOf(durability)),
-                    new PlaceHolder("Ammo", String.valueOf(ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount)),
-                    new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
+            MessagesConfig.RELOADING_START.get(player);
 
-            if (player.getInventory().getItemInOffHand().equals(ammoItem)) {
-                ItemStack offHand = player.getInventory().getItemInOffHand();
-                if (offHand.getAmount() > 1) {
-                    offHand.setAmount(offHand.getAmount() - 1);
-                } else {
-                    player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-                }
+            if (ammoItem.getAmount() > 1) {
+                ammoItem.setAmount(ammoItem.getAmount() - 1);
             } else {
-                if (ammoItem.getAmount() > 1) {
-                    ammoItem.setAmount(ammoItem.getAmount() - 1);
-                } else {
-                    player.getInventory().removeItem(ammoItem);
-                }
+                player.getInventory().removeItem(ammoItem);
             }
 
             Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
@@ -97,10 +84,7 @@ public class PlayerSwapHandListener implements Listener {
                         new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
                 GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
-                MessagesConfig.RELOADING_FINISHED.get(player,
-                        new PlaceHolder("Durability", String.valueOf(durability)),
-                        new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
-                        new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));;
+                MessagesConfig.RELOADING_FINISHED.get(player);
             }, fireable.getReloadTime());
         } else {
             GunshellAmmunition newAmmunition = GunshellPlugin.getInstance().getWeaponRegistry().getAmmunition()
@@ -114,10 +98,7 @@ public class PlayerSwapHandListener implements Listener {
 
             // Add the ammo to the player's inventory
             player.getInventory().addItem(ammoItem);
-            MessagesConfig.UNLOADING_FINISHED.get(player,
-                    new PlaceHolder("Durability", String.valueOf(durability)),
-                    new PlaceHolder("Ammo", String.valueOf(ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount)),
-                    new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));;
+            MessagesConfig.UNLOADING_FINISHED.get(player);
         }
     }
 }

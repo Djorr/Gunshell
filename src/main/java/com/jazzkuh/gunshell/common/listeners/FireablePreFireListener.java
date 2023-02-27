@@ -1,9 +1,5 @@
 package com.jazzkuh.gunshell.common.listeners;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
-import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
-import com.jazzkuh.gunshell.api.events.FireableDamageEvent;
-import com.jazzkuh.gunshell.api.events.FireableFireEvent;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
@@ -13,15 +9,15 @@ import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AmmunitionActi
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
-import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
+import com.jazzkuh.gunshell.api.events.FireableFireEvent;
+import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,7 +59,7 @@ public class FireablePreFireListener implements Listener {
         List<String> ammunitionKeys = fireable.getAmmunitionKeys();
         if (ammo <= 0 && PluginUtils.getInstance().getItemWithNBTTags(player, AMMUNITION_KEY, ammunitionKeys).isEmpty()) {
             MessagesConfig.ERROR_OUT_OF_AMMO.get(player);
-            player.playSound(player.getLocation(), fireable.getEmptySound(), fireable.getSoundVolume(), 1F);
+            player.playSound(player.getLocation(), fireable.getEmptySound(), 100, 1F);
             return;
         }
 
@@ -73,29 +69,17 @@ public class FireablePreFireListener implements Listener {
             GunshellPlugin.getInstance().getReloadingSet().add(player.getUniqueId());
 
             for (Player target : player.getLocation().getWorld().getPlayers()) {
-                if (target.getLocation().distance(player.getLocation()) <= fireable.getSoundRange()) {
-                    target.playSound(player.getLocation(), fireable.getReloadSound(), fireable.getSoundVolume(), 1F);
+                if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
+                    target.playSound(player.getLocation(), fireable.getReloadSound(), 100, 1F);
                 }
             }
 
-            MessagesConfig.RELOADING_START.get(player,
-                    new PlaceHolder("Durability", String.valueOf(durability)),
-                    new PlaceHolder("Ammo", String.valueOf(ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount)),
-                    new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
+            MessagesConfig.RELOADING_START.get(player);
 
-            if (player.getInventory().getItemInOffHand().equals(ammoItem)) {
-                ItemStack offHand = player.getInventory().getItemInOffHand();
-                if (offHand.getAmount() > 1) {
-                    offHand.setAmount(offHand.getAmount() - 1);
-                } else {
-                    player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-                }
+            if (ammoItem.getAmount() > 1) {
+                ammoItem.setAmount(ammoItem.getAmount() - 1);
             } else {
-                if (ammoItem.getAmount() > 1) {
-                    ammoItem.setAmount(ammoItem.getAmount() - 1);
-                } else {
-                    player.getInventory().removeItem(ammoItem);
-                }
+                player.getInventory().removeItem(ammoItem);
             }
 
             Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
@@ -110,10 +94,7 @@ public class FireablePreFireListener implements Listener {
                         new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
                 GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
-                MessagesConfig.RELOADING_FINISHED.get(player,
-                        new PlaceHolder("Durability", String.valueOf(durability)),
-                        new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
-                        new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
+                MessagesConfig.RELOADING_FINISHED.get(player);
             }, fireable.getReloadTime());
             return;
         }
@@ -129,8 +110,8 @@ public class FireablePreFireListener implements Listener {
         if (hasCooldown(cooldownKey, fireable) || hasGrabCooldown(player.getUniqueId(), fireable)) return;
 
         FireableFireEvent fireableFireEvent = new FireableFireEvent(player, fireable);
-        Bukkit.getPluginManager().callEvent(fireableFireEvent);
         if (fireableFireEvent.isCancelled()) return;
+        Bukkit.getPluginManager().callEvent(fireableFireEvent);
 
         /*
          * Perform the raytrace to find the target
@@ -171,8 +152,8 @@ public class FireablePreFireListener implements Listener {
         }
 
         for (Player target : player.getLocation().getWorld().getPlayers()) {
-            if (target.getLocation().distance(player.getLocation()) <= fireable.getSoundRange()) {
-                target.playSound(player.getLocation(), fireable.getSound(), fireable.getSoundVolume(), 1F);
+            if (target.getLocation().distance(player.getLocation()) <= (fireable.getRange() + 2D)) {
+                target.playSound(player.getLocation(), fireable.getSound(), 100, 1F);
             }
         }
 
@@ -197,10 +178,6 @@ public class FireablePreFireListener implements Listener {
             ChatUtils.sendMessage(player, "&cError: &4Ammunition action not found!");
             return;
         }
-
-        FireableDamageEvent fireableDamageEvent = new FireableDamageEvent(player, rayTraceResult, fireable);
-        Bukkit.getPluginManager().callEvent(fireableDamageEvent);
-        if (fireableDamageEvent.isCancelled()) return;
 
         ammunitionAction.fireAction(player, rayTraceResult, ammunition.getConfiguration());
     }

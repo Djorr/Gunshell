@@ -1,12 +1,12 @@
 package com.jazzkuh.gunshell.common.actions.throwable;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.actions.throwable.abstraction.AbstractThrowableAction;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.GunshellPlugin;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -47,10 +47,6 @@ public class EndCreditsThrowableAction extends AbstractThrowableAction {
                 Player playerTarget = (Player) livingEntity;
                 if (playerTarget.getGameMode() == GameMode.SPECTATOR
                         || playerTarget.getGameMode() == GameMode.CREATIVE) return;
-
-                if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
-                    compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
-                }
 
                 CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
                 compatibilityLayer.showEndCreditScene(playerTarget);

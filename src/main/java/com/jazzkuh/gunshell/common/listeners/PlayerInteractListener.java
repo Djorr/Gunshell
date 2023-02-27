@@ -1,12 +1,12 @@
 package com.jazzkuh.gunshell.common.listeners;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.events.FireablePreFireEvent;
-import com.jazzkuh.gunshell.api.events.FireableToggleScopeEvent;
-import com.jazzkuh.gunshell.api.events.ThrowablePreFireEvent;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellThrowable;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
+import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.events.FireableToggleScopeEvent;
+import com.jazzkuh.gunshell.api.events.ThrowablePreFireEvent;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.compatibility.extensions.WorldGuardExtension;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
@@ -44,8 +44,8 @@ public class PlayerInteractListener implements Listener {
                 case LEFT_CLICK_AIR: {
                     if (!fireable.isScopeEnabled()) return;
                     FireableToggleScopeEvent scopeEvent = new FireableToggleScopeEvent(player, fireable);
-                    Bukkit.getPluginManager().callEvent(scopeEvent);
                     if (scopeEvent.isCancelled()) return;
+                    Bukkit.getPluginManager().callEvent(scopeEvent);
                     break;
                 }
                 case RIGHT_CLICK_BLOCK:

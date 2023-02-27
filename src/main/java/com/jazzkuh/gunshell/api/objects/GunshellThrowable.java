@@ -1,9 +1,9 @@
 package com.jazzkuh.gunshell.api.objects;
 
-import com.jazzkuh.gunshell.api.enums.BuiltinThrowableActionType;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.api.enums.BuiltinThrowableActionType;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

@@ -1,11 +1,7 @@
 package com.jazzkuh.gunshell.common.actions.melee;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.common.actions.melee.abstraction.AbstractMeleeAction;
-import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
-import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
-import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -26,18 +22,10 @@ public class MeleeDamageAction extends AbstractMeleeAction {
         if (entity.isDead()) return;
         if (entity.hasMetadata("NPC")) return;
 
-        CompatibilityManager compatibilityManager = GunshellPlugin.getInstance().getCompatibilityManager();
         if (entity instanceof Player) {
             Player playerTarget = (Player) entity;
             if (playerTarget.getGameMode() == GameMode.SPECTATOR
                     || playerTarget.getGameMode() == GameMode.CREATIVE) return;
-
-            if (compatibilityManager.isExtensionEnabled(CompatibilityManager.Extension.COMBATTAGPLUS)) {
-                compatibilityManager.getCombatTagPlusExtension().getTagManager().tag(playerTarget, player);
-            }
-
-            MessagesConfig.MELEE_HIT_BY_PLAYER.get(playerTarget,
-                    new PlaceHolder("Name", player.getName()));
         }
 
         if (entity.getLocation().getWorld() != null) {

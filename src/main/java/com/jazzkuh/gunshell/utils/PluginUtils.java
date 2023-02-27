@@ -1,10 +1,6 @@
 package com.jazzkuh.gunshell.utils;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.jazzkuh.gunshell.GunshellPlugin;
-import com.jazzkuh.gunshell.common.ErrorResult;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.AccessLevel;
@@ -20,12 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,42 +98,5 @@ public class PluginUtils {
         // Apply knockback
         Vector vector = livingEntity.getLocation().getDirection().normalize().multiply(-knockback).setY(0);
         livingEntity.setVelocity(vector);
-    }
-
-    public ErrorResult getErrorResult(int port) {
-        JsonObject jsonObject = getJSON("https://dash.gunshell.nl/api/check-blacklist?port=" + port, "GET");
-        if (jsonObject == null) {
-            return new ErrorResult(false, false);
-        }
-
-        boolean revokedAccess = jsonObject.get("revokedAccess").getAsBoolean();
-        boolean devFeatures = jsonObject.get("devFeatures").getAsBoolean();
-        return new ErrorResult(revokedAccess, devFeatures);
-    }
-
-    public String getServerAddress() {
-        JsonObject jsonObject = getJSON("https://dash.gunshell.nl/api/check-address", "GET");
-        if (jsonObject == null) {
-            return "API Error";
-        }
-
-        return jsonObject.get("address").getAsString();
-    }
-
-    private JsonObject getJSON(String url, String method) {
-        try {
-            HttpURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
-            connection.setConnectTimeout(5000);
-            connection.setRequestMethod(method);
-            connection.setRequestProperty("User-Agent", "Gunshell-Agent");
-            connection.setRequestProperty("Version", GunshellPlugin.getInstance().getDescription().getVersion());
-            connection.connect();
-
-            return new JsonParser().parse(new InputStreamReader((InputStream) connection.getContent()))
-                    .getAsJsonObject();
-        } catch (IOException ignored) {
-        }
-
-        return null;
     }
 }

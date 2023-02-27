@@ -1,10 +1,10 @@
 package com.jazzkuh.gunshell.common.listeners;
 
-import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellMelee;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
+import com.jazzkuh.gunshell.GunshellPlugin;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
